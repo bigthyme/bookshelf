@@ -2,7 +2,7 @@
 date = "2017-12-26T16:37:37-08:00"
 description = "Classifying Numbers in Street View Images"
 title = "SVHN Classification"
-
+markup = "markdown"
 +++
 
 Given the Street View House Number dataset, train a model that can predict number classifications in similar images.
@@ -12,10 +12,10 @@ Given the Street View House Number dataset, train a model that can predict numbe
 ### Implementation
 There are numerous considerations to be made when building out a custom model. The thing to first consider is figuring out what data you're dealing with. In the SVHN databse, there are two types of datasets: dataset one being images containing number sequences and the dataset two, being a MNIST like dataset for single digit classification. Although the task was to identify a sequence of numbers, I ended up choosing the second dataset due to the simplicity of the data format. Given more time, I would've liked to retrain the first dataset. Expanding on my choice of dataset, I was mostly training on a CPU device and wanted to do as much as I could to reduce training time. Given that the choice dataset contained images that were `32 x 32 x 3`, I thought it'd be more advantageous to train on versus the alternative, `48 x 48 x 3`. Alongwith the actual images to be used in training, the corresponding labels needed to read into memory. Though a straight forward task, I made the decision to utilize one hot encoding for classifications. Here's the encoding scheme I used for the project:
 
-```
+```md
 # as opposed to the given labels
-'[1]` // represents a 1
-'[10]` // represents a 10
+[1] // represents a 1
+[10] // represents a 10
 
 # added one last non-digit class and moved the 10 value to the 0th position
 [1,0,0,0,0,0,0,0,0,0,0] // this now represents a 10
@@ -40,8 +40,8 @@ Due to my CPU, I was unable to run the `VGG16` out of the box. The large `4096` 
 ![vgg](https://i.imgur.com/XtIjk4b.jpg)
 
 #### References
-```
- 1. *Multi-digit Number Recognition from Street View Imagery using Deep Convolutional Neural Networks*
+```md
+1. *Multi-digit Number Recognition from Street View Imagery using Deep Convolutional Neural Networks*
  Ian J. Goodfellow, Yaroslav Bulatov, Julian Ibarz, Sacha Arnoud, Vinay Shet - https://arxiv.org/abs/1312.6082
 2. *On the Convergence of A Family of Robust Losses for Stochastic Gradient Descent*
  Bo Han, Ivor W. Tsang, and Ling Chen - https://arxiv.org/pdf/1605.01623.pdf
@@ -52,3 +52,4 @@ Due to my CPU, I was unable to run the `VGG16` out of the box. The large `4096` 
 Wikipedia - https://en.wikipedia.org/wiki/Softmax_function
 6. *VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION*
 Karen Simonyan and Andrew Zisserman - https://arxiv.org/pdf/1409.1556v6.pdf
+```
