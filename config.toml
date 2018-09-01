@@ -1,0 +1,12 @@
+baseURL = "http://anthonysing.com/"
+footnoteReturnLinkContents = "↩"
+title = "Everybody Code"
+
+[params]
+  AuthorName = "Anthony Singhavong"
+  GitHubUser = "bigthyme"
+  SidebarRecentLimit = 5
+  Subtitle = "Comedic relief with a sprinkle of Academia"
+
+[permalinks]
+  post = "/:year/:month/:title/"
