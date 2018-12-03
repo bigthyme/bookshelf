@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="description" content="Classifying Numbers in Street View Images">
+	
+		<title>
+				SVHN Classification &middot; Everybody Code
+		</title>
+	
+		
+  		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="https://anthonysing.com/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="https://anthonysing.com/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="https://anthonysing.com/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Everybody Code" />
+	</head>
+	
+
+  <body>
+		<nav class="nav">
+			<div class="nav-container">
+			<a href="https://anthonysing.com//">
+				<h2 class="nav-title">Everybody Code</h2>
+			</a>
+			<ul>
+				<li><a href="https://anthonysing.com/about">About</a></li>
+				<li><a href="https://anthonysing.com/">Posts</a></li>
+			</ul>
+			</div>
+		</nav>
+
+<main>
+	<div class="post">
+		<div class="post-info">
+		<span>Written by</span>
+			
+			<br>
+			<span>on&nbsp;</span><time datetime="2017-12-26 16:37:37 -0800 PST">December 26, 2017</time>
+		</div>
+
+		<h1 class="post-title">SVHN Classification</h1>
+		<div class="post-line"></div>
+
+		
+
+<p>Given the Street View House Number dataset, train a model that can predict number classifications in similar images.</p>
+
+<p><img src="https://i.imgur.com/ERm71gc.png" alt="svhn" /></p>
+
+<h3 id="implementation">Implementation</h3>
+
+<p>There are numerous considerations to be made when building out a custom model. The thing to first consider is figuring out what data you&rsquo;re dealing with. In the SVHN databse, there are two types of datasets: dataset one being images containing number sequences and the dataset two, being a MNIST like dataset for single digit classification. Although the task was to identify a sequence of numbers, I ended up choosing the second dataset due to the simplicity of the data format. Given more time, I would&rsquo;ve liked to retrain the first dataset. Expanding on my choice of dataset, I was mostly training on a CPU device and wanted to do as much as I could to reduce training time. Given that the choice dataset contained images that were <code>32 x 32 x 3</code>, I thought it&rsquo;d be more advantageous to train on versus the alternative, <code>48 x 48 x 3</code>. Alongwith the actual images to be used in training, the corresponding labels needed to read into memory. Though a straight forward task, I made the decision to utilize one hot encoding for classifications. Here&rsquo;s the encoding scheme I used for the project:</p>
+
+<pre><code># as opposed to the given labels
+[1] // represents a 1
+[10] // represents a 10
+
+# added one last non-digit class and moved the 10 value to the 0th position
+[1,0,0,0,0,0,0,0,0,0,0] // this now represents a 10
+[0,0,0,0,0,0,0,0,0,0,1] // this now represents a non-digit classification
+</code></pre>
+
+<h4 id="preprocessing">Preprocessing</h4>
+
+<p>To load the <code>.mat</code> data type, I utilized the <code>scipy</code> library to read the file into memory for processing. Initially, I loaded in both <code>train.mat</code> and <code>test.mat</code> until I found out that the <code>.fit</code> model in keras could split the training data by some percentage via the <code>validation_split</code> parameter. I also normalized every image to further alleviate the time spent on convolutions. Though I did my final training steps with <code>BGR</code> images, I did obtain comparable recents with greyscaled images. That being said, I&rsquo;m not quite sure if it matters all the much which channels are used in training; so long as the predictions are processed in the same manner.</p>
+
+<h4 id="cnn-architecture">CNN Architecture</h4>
+
+<p>Every CNN starts with convolutional layers and end with a fully connected output layer. When building my own custom model, I used two conv layers accompanied by corresponding max pooling layers. Due to it&rsquo;s efficiency, I chose the <code>relu</code> activation function for all conv layers (e.g. <code>f(x) = max(0, x)</code>). <code>MaxPooling</code> was added to reduce spatial dimensionality for training as well as to control overfitting.
+After adding those top layers, I added fully connected layers to accept the output from the max pooling layers. Due to training on a cpu device with limited resources, the largest fc layers I could acheive was <code>~1000</code> nodes. Then of course, since we&rsquo;re classifying digits we need 10 indices per each digit we want to predict. In my particular case, I added another layer (and corresponding dataset) to train an 11th class that would represent a digit/non-digit classification. The last layer is a <code>softmax</code> output that grabs the previous calculations and outputs values in a normalized form. Specifically, the numbers become ranges from 0 to 1 and add up to 1.</p>
+
+<h4 id="training">Training</h4>
+
+<p>Given the above model, I trained several times adjusting many different hyperparameters to improve accuracy and loss metrics. The first parameter I attempted to update was <code>batch_size</code> and <code>epochs</code>. I kept a few things constant after a few mishaps on early stages of training. Namely, having the right digit to non-digit ratio. In the end, I had <code>72081</code> non-digit images and <code>73254</code> digit images. I also split my training set where <code>30%</code> was allocated to the validation set. Here was my first run accuracy and loss:
+<img src="https://i.imgur.com/BNI1c8j.jpg" alt="7" /></p>
+
+<p>I was able to acheive very high accuracies with just <code>7</code> epochs, though my best performing model given these constants was simply to bump the epoch from <code>7</code> to <code>25</code>. I also added an Early Stopping callback to the fit function to evaluate my best runs and stop if the loss function passed a certain threshold. I chose <code>25</code> due to running this model with <code>30</code> and having it stop at <code>26</code>, though the 26th run wasn&rsquo;t quite as accurate. I could&rsquo;ve updated my early stopping parameters but the differences were seemingly minimal:
+<img src="https://i.imgur.com/nd0edh9.jpg" alt="25" /></p>
+
+<p>Due to my CPU, I was unable to run the <code>VGG16</code> out of the box. The large <code>4096</code> output layers would consistently OOM my device and thus could not finish outputting graphs. Because of this, I ended up using a ported version of VGG  which did not yield good results with the same <code>hyperparameters</code> described above. <em>Simar results were acheived for the <code>VGG16</code> pretrained.</em>
+<img src="https://i.imgur.com/XtIjk4b.jpg" alt="vgg" /></p>
+
+<h4 id="references">References</h4>
+
+<pre><code class="language-md">1. *Multi-digit Number Recognition from Street View Imagery using Deep Convolutional Neural Networks*
+ Ian J. Goodfellow, Yaroslav Bulatov, Julian Ibarz, Sacha Arnoud, Vinay Shet - https://arxiv.org/abs/1312.6082
+2. *On the Convergence of A Family of Robust Losses for Stochastic Gradient Descent*
+ Bo Han, Ivor W. Tsang, and Ling Chen - https://arxiv.org/pdf/1605.01623.pdf
+3. *VGG-16 pre-trained model for Keras*
+ baraldilorenzo - https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3
+4. *Rectified Linear Units Improve Restricted Boltzmann Machines*
+5. *Softmax*
+Wikipedia - https://en.wikipedia.org/wiki/Softmax_function
+6. *VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION*
+Karen Simonyan and Andrew Zisserman - https://arxiv.org/pdf/1409.1556v6.pdf
+</code></pre>
+
+
+	</div>
+
+	<div class="pagination">
+		<a href="/blog/correlated-q/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>		<footer>
+			<span>
+			&copy; <time datetime="2018-12-02 17:37:43.353179 -0800 PST m=&#43;0.113178995">2018</time> . Made with Hugo using the <a href="https://github.com/EmielH/tale-hugo/">Tale</a> theme.
+			</span>
+		</footer>
+  </body>
+</html>

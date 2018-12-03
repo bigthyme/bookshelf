@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on Everybody Code</title>
+    <link>https://anthonysing.com/blog/</link>
+    <description>Recent content in Blogs on Everybody Code</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 01 Sep 2018 16:37:37 -0800</lastBuildDate>
+    
+	<atom:link href="https://anthonysing.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Decision Tree Strategy (JP Morgan Chase)</title>
+      <link>https://anthonysing.com/blog/decision-tree/</link>
+      <pubDate>Sat, 01 Sep 2018 16:37:37 -0800</pubDate>
+      
+      <guid>https://anthonysing.com/blog/decision-tree/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Correlated Q Learning</title>
+      <link>https://anthonysing.com/blog/correlated-q/</link>
+      <pubDate>Fri, 31 Aug 2018 16:37:37 -0800</pubDate>
+      
+      <guid>https://anthonysing.com/blog/correlated-q/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SVHN Classification</title>
+      <link>https://anthonysing.com/blog/svhn/</link>
+      <pubDate>Tue, 26 Dec 2017 16:37:37 -0800</pubDate>
+      
+      <guid>https://anthonysing.com/blog/svhn/</guid>
+      <description>Given the Street View House Number dataset, train a model that can predict number classifications in similar images.
+Implementation There are numerous considerations to be made when building out a custom model. The thing to first consider is figuring out what data you&amp;rsquo;re dealing with. In the SVHN databse, there are two types of datasets: dataset one being images containing number sequences and the dataset two, being a MNIST like dataset for single digit classification.</description>
+    </item>
+    
+  </channel>
+</rss>

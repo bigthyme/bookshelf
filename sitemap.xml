@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://anthonysing.com/blog/decision-tree/</loc>
+    <lastmod>2018-09-01T16:37:37-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://anthonysing.com/blog/correlated-q/</loc>
+    <lastmod>2018-08-31T16:37:37-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://anthonysing.com/blog/svhn/</loc>
+    <lastmod>2017-12-26T16:37:37-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://anthonysing.com/about/</loc>
+  </url>
+  
+  <url>
+    <loc>https://anthonysing.com/blog/</loc>
+    <lastmod>2018-09-01T16:37:37-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://anthonysing.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://anthonysing.com/</loc>
+    <lastmod>2018-09-01T16:37:37-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://anthonysing.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+</urlset>
